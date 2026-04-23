@@ -1,4 +1,4 @@
--- mx_Mrol Fly Module V2.0
+-- mx_Mrol Fly Module V2.0 | Advanced Cleanup
 local player = game.Players.LocalPlayer
 local userInput = game:GetService("UserInputService")
 local runService = game:GetService("RunService")
@@ -11,7 +11,22 @@ return function(state)
     
     if not root or not hum then return end
 
+    -- KAPATMA KOMUTU GELDİĞİNDE:
+    if not state then
+        _G.MrolFlyV2 = false
+        -- Karakter üzerindeki uçuş objelerini anında temizle
+        if root:FindFirstChild("MrolBG") then root.MrolBG:Destroy() end
+        if root:FindFirstChild("MrolBV") then root.MrolBV:Destroy() end
+        hum.PlatformStand = false
+        return
+    end
+
+    -- AÇMA KOMUTU GELDİĞİNDE:
     if state then
+        -- Varsa eski objeleri temizle (Üst üste binmesin)
+        if root:FindFirstChild("MrolBG") then root.MrolBG:Destroy() end
+        if root:FindFirstChild("MrolBV") then root.MrolBV:Destroy() end
+
         local bg = Instance.new("BodyGyro", root)
         bg.Name = "MrolBG"
         bg.P = 9e4
@@ -26,7 +41,8 @@ return function(state)
         hum.PlatformStand = true
         
         task.spawn(function()
-            while _G.MrolFlyV2 and char and char.Parent do
+            -- Döngü her karede _G.MrolFlyV2'yi kontrol eder
+            while _G.MrolFlyV2 and char and char.Parent and root and root.Parent do
                 local cam = workspace.CurrentCamera
                 bg.cframe = cam.CFrame
                 local dir = Vector3.new(0,0,0)
@@ -39,11 +55,11 @@ return function(state)
                 bv.velocity = dir.Magnitude > 0 and dir.Unit * 100 or Vector3.new(0,0,0)
                 runService.RenderStepped:Wait()
             end
+            
+            -- Döngü bittiğinde veya karakter öldüğünde son temizlik
             if bg then bg:Destroy() end
             if bv then bv:Destroy() end
-            hum.PlatformStand = false
+            if hum then hum.PlatformStand = false end
         end)
-    else
-        _G.MrolFlyV2 = false
     end
 end
