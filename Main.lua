@@ -198,3 +198,19 @@ UI:AddToggle("Aimbot Master", function(active)
         loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/AIM.lua"))()
     end
 end)
+
+-- Click TP (Fixlenmiş Bağlantı)
+UI:AddToggle("Click TP", function(active)
+    local func = loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/ClickTP.lua"))()
+    
+    if type(func) == "function" then
+        func(active) -- active (true/false) değerini modülün içine gönderiyoruz
+    end
+end)
+
+-- Aimbot
+UI:AddToggle("No CLip", function(active)
+    if active then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/noclip.lua"))()
+    end
+end)
