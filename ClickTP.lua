@@ -1,54 +1,47 @@
 -- mx_Mrol Suite V2.0 | Blood Edition TP Tool
-local players = game:GetService("Players")
-local localPlayer = players.LocalPlayer
-local mouse = localPlayer:GetMouse()
+local Player = game.Players.LocalPlayer
+local Mouse = Player:GetMouse()
 
-local TP_Tool_Data = {
-    ToolName = "Mxrol TP",
-    ToolInstance = nil
-}
+local ToolName = "Mxrol TP"
+local ToolConnection = nil
 
--- Temizlik Fonksiyonu (Silme)
-local function CleanupTool()
-    if TP_Tool_Data.ToolInstance then
-        TP_Tool_Data.ToolInstance:Destroy()
-        TP_Tool_Data.ToolInstance = nil
+-- Temizlik Fonksiyonu (Kapanınca her şeyi siler)
+local function RemoveTool()
+    -- Envanterden sil
+    if Player.Backpack:FindFirstChild(ToolName) then
+        Player.Backpack[ToolName]:Destroy()
     end
-    -- Karakterin elindeyse de sil
-    local toolInChar = localPlayer.Character and localPlayer.Character:FindFirstChild(TP_Tool_Data.ToolName)
-    if toolInChar then toolInChar:Destroy() end
-    
-    -- Envanterde kalmışsa sil
-    local toolInBackpack = localPlayer.Backpack:FindFirstChild(TP_Tool_Data.ToolName)
-    if toolInBackpack then toolInBackpack:Destroy() end
+    -- Elinden sil (Karakterin içindeyse)
+    if Player.Character and Player.Character:FindFirstChild(ToolName) then
+        Player.Character[ToolName]:Destroy()
+    end
 end
 
 return function(state)
-    -- Önce mevcut her şeyi temizle (Üst üste binmesin)
-    CleanupTool()
+    -- Her ihtimale karşı önce temizle (Üst üste binmesin)
+    RemoveTool()
 
     if state then
-        -- Yeni Tool Oluştur
-        local tool = Instance.new("Tool")
-        tool.Name = TP_Tool_Data.ToolName
-        tool.RequiresHandle = false -- Tutacak parça gerekmez, direkt çalışır
-        tool.CanBeDropped = false
-        
-        -- Tool Seçiliyken Tıklama Olayı
-        tool.Activated:Connect(function()
-            local char = localPlayer.Character
-            local root = char and char:FindFirstChild("HumanoidRootPart")
+        -- SENİN KODUNUN ENTEGRE EDİLMİŞ HALİ
+        local Tool = Instance.new("Tool")
+        Tool.Name = ToolName
+        Tool.RequiresHandle = false
+        Tool.Parent = Player.Backpack
+
+        -- Işınlanma Fonksiyonu
+        Tool.Activated:Connect(function()
+            local Pos = Mouse.Hit.p
+            local Character = Player.Character
             
-            if root and mouse.Hit then
-                -- Kan kırmızısı bir efekt istersen (isteğe bağlı) buraya eklenebilir
-                root.CFrame = CFrame.new(mouse.Hit.Position + Vector3.new(0, 3, 0))
+            if Character and Character:FindFirstChild("HumanoidRootPart") then
+                Character:SetPrimaryPartCFrame(CFrame.new(Pos + Vector3.new(0, 3, 0)))
             end
         end)
-        
-        tool.Parent = localPlayer.Backpack
-        TP_Tool_Data.ToolInstance = tool
+
+        print("Mxrol TP Aktif! Yönetmen, şov başlasın.")
     else
-        -- Kapandığında her yerden sil
-        CleanupTool()
+        -- Kapatılınca aleti yok et
+        RemoveTool()
+        print("Mxrol TP Devre Dışı.")
     end
 end
