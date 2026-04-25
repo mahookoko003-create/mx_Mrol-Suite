@@ -208,9 +208,19 @@ UI:AddToggle("Click TP", function(active)
     end
 end)
 
--- Aimbot
+-- No Clip
 UI:AddToggle("No CLip", function(active)
     if active then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/noclip.lua"))()
     end
+end)
+
+-- FPS Boost
+UI:AddToggle("FPS Boost", function(v) 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/FPSBoost.lua"))()(v) 
+end)
+
+-- Speed Hack
+UI:AddToggle("Speed Hack", function(v) 
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/SpeedBoost.lua"))()(v) 
 end)
