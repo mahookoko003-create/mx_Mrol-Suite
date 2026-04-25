@@ -11,7 +11,7 @@ local ClickTP_Data = {
 
 local function ExecuteTP()
     -- Sadece sol CTRL tuşu basılıyken çalışır
-    if ClickTP_Data.Active and userInput:IsKeyDown(Enum.KeyCode.LeftControl) then
+    if ClickTP_Data.Active and userInput:IsKeyDown(Enum.KeyCode.Shift) then
         local char = localPlayer.Character
         local root = char and char:FindFirstChild("HumanoidRootPart")
         
