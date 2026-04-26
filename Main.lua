@@ -13,10 +13,10 @@ local SmoothInfo = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirecti
 function Library:Init(hubName)
     local ScreenGui = Instance.new("ScreenGui", CoreGui)
     ScreenGui.Name = "Mrol_Prestige_Suite"
-    
+
     local Main = Instance.new("Frame", ScreenGui)
     Main.Name = "MainFrame"
-    Main.Size = UDim2.new(0, 480, 0, 420) -- Profil için biraz uzattım
+    Main.Size = UDim2.new(0, 480, 0, 420) 
     Main.Position = UDim2.new(0.5, -240, 0.5, -210)
     Main.BackgroundColor3 = Color3.fromRGB(10, 10, 12)
     Main.BorderSizePixel = 0
@@ -62,13 +62,14 @@ function Library:Init(hubName)
     Line.BackgroundColor3 = Color3.fromRGB(180, 0, 0)
     Line.BackgroundTransparency = 0.3
 
-    -- [SCROLL] İçerik Alanı
+    -- [SCROLL] İçerik Alanı (DÜZELTİLEN KISIM)
     local Scroll = Instance.new("ScrollingFrame", Main)
-    Scroll.Size = UDim2.new(1, -30, 1, -160) -- Alt paneli açmak için kısalttım
+    Scroll.Size = UDim2.new(1, -30, 1, -160) 
     Scroll.Position = UDim2.new(0, 15, 0, 70)
     Scroll.BackgroundTransparency = 1
-    Scroll.ScrollBarThickness = 0
+    Scroll.ScrollBarThickness = 4 -- Kaydırma çubuğu görünür yapıldı
     Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+    Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y -- Buton eklendikçe otomatik uzar
     
     local Layout = Instance.new("UIListLayout", Scroll)
     Layout.Padding = UDim.new(0, 10)
@@ -204,7 +205,7 @@ UI:AddToggle("Click TP", function(active)
     local func = loadstring(game:HttpGet("https://raw.githubusercontent.com/mahookoko003-create/mx_Mrol-Suite/main/ClickTP.lua"))()
     
     if type(func) == "function" then
-        func(active) -- active (true/false) değerini modülün içine gönderiyoruz
+        func(active)
     end
 end)
 
